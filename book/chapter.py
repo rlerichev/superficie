@@ -1,10 +1,18 @@
-import logging
+import logging, sys
 from PyQt4 import QtGui, uic, QtCore
 from pivy.coin import SoSeparator, SoSwitch
 from page import Page
 from superficie.util import nodeDict, connect, filePath
 
-changePage_fclass, base_class = uic.loadUiType(filePath("viewer", "change-page.ui"))
+#changePage_fclass, base_class = uic.loadUiType(filePath("viewer", "change-page.ui"))
+changePage_fclass = 0
+base_class = 0
+
+#basedir = './ui'
+if getattr(sys, 'frozen', None):
+    changePage_fclass, base_class = uic.loadUiType(filePath(sys._MEIPASS, "change-page.ui"))
+else:
+    changePage_fclass, base_class = uic.loadUiType(filePath("viewer", "change-page.ui"))
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

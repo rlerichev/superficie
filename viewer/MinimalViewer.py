@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import logging
+import sys
 from PyQt4.QtGui import QWidget
 from PyQt4 import QtCore, QtGui, QtOpenGL
 
@@ -114,7 +115,13 @@ class MinimalViewer(QWidget):
             self.cameraSensor2.detach()
 
     def addLights(self):
-        self.colorLights = readFile(filePath("viewer", "lights.iv")).getChild(0)
+        basedir = '.'
+        if getattr(sys, 'frozen', None):
+            basedir = sys._MEIPASS
+        #else:
+        #    basedir = os.path.dirname(__file__)
+
+        self.colorLights = readFile(filePath("viewer", basedir+"/lights.iv")).getChild(0)
         self.insertLight(self.colorLights)
         self.colorLights.whichChild = coin.SO_SWITCH_ALL
 

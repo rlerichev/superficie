@@ -1,3 +1,4 @@
+import sys
 from PyQt4 import QtGui, QtCore, uic
 from superficie.util import identity, filePath, partial, segment, conecta
 from superficie.animations import Animation, AnimationGroup
@@ -8,7 +9,11 @@ class Slider(QtGui.QWidget):
         # TODO: cambiar el orden: func, rangep...
         ## rangep = (name, vmin, vmax, vini, npoints)
         QtGui.QWidget.__init__(self)
-        uic.loadUi(filePath("Gui","paramTemplate2.ui"), self)
+        if getattr(sys, 'frozen', None):
+            basedir = sys._MEIPASS
+            uic.loadUi(basedir+"/paramTemplate2.ui", self)
+        else:
+            uic.loadUi(filePath("Gui","paramTemplate2.ui"), self)
         self.timeline = QtCore.QTimeLine(duration)
         self.name = rangep[0]
         self.npoints = rangep[-1]
